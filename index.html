@@ -3,7 +3,7 @@
   <body>
     <script>
       const Hash = new URLSearchParams(window.location.hash.substring(1));
-      const AccessToken = hash.get("access_token")
+      const AccessToken = Hash.get("access_token")
 
       const Payload = {message: "Success", AccessToken};
       const Target = window.opener || window.parent;
