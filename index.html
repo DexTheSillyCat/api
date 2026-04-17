@@ -5,8 +5,6 @@
       const Hash = new URLSearchParams(window.location.hash.substring(1));
       const AccessToken = Hash.get("access_token");
 
-      console.log("Access Token:", AccessToken);
-
       if (!AccessToken) {
         console.warn("no access token hash found");
         document.body.textContent = "no access token";
@@ -21,7 +19,7 @@
 
       if (Target) {
         Target.postMessage(Payload, "*");
-        console.log("sent!");
+        console.log("found token", AccessToken);
       } else {
         document.body.textContent = "son";
         console.warn("son");
@@ -31,8 +29,8 @@
         headers: { Authorization: `Bearer ${AccessToken}` }
       })
         .then(r => r.json())
-        .then(data => console.log("data ", data))
-        .catch(err => console.error("invalid! error ", err));
+        .then(data => console.log("data", data))
+        .catch(err => console.error("invalid! error", err));
     </script>
   </body>
 </html>
