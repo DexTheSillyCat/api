@@ -3,15 +3,36 @@
   <body>
     <script>
       const Hash = new URLSearchParams(window.location.hash.substring(1));
-      const AccessToken = Hash.get("access_token")
+      const AccessToken = Hash.get("access_token");
 
-      const Payload = {message: "Success", AccessToken};
+      console.log("Access Token:", AccessToken);
+
+      if (!AccessToken) {
+        console.warn("no access token hash found");
+        document.body.textContent = "no access token";
+      }
+
+      const Payload = {
+        message: "success",
+        AccessToken
+      };
+
       const Target = window.opener || window.parent;
-      if (target) {
-        Target.postMessage(Payload, "*")
+
+      if (Target) {
+        Target.postMessage(Payload, "*");
+        console.log("sent!");
       } else {
         document.body.textContent = "son";
+        console.warn("son");
       }
+
+      fetch("https://cors-anywhere.herokuapp.com/https://discord.com/api/users/@me", {
+        headers: { Authorization: `Bearer ${AccessToken}` }
+      })
+        .then(r => r.json())
+        .then(data => console.log("data ", data))
+        .catch(err => console.error("invalid! error ", err));
     </script>
   </body>
 </html>
